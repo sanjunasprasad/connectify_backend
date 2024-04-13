@@ -9,8 +9,6 @@ import friendRoute from './interfaces/routes/friendRoutes.js'
 import chatRoute from './interfaces/routes/ChatRoute.js';
 import messageRoute from './interfaces/routes/MessageRoute.js';
 import {configDotenv} from "dotenv"
-import passport from 'passport';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import http from "http"
 import {Server} from "socket.io"
 
@@ -115,36 +113,36 @@ io.on("connection", (socket) => {
 //GOOGLE SIGNIN
 
 // Configure Passport.js
-passport.use(
-    new GoogleStrategy(
-        {
-            clientID: process.env.CLIENT_ID ,
-            clientSecret: process.env.SECRET_ID ,
-            callbackURL: 'http://localhost:8000/auth/google/callback',
-        },
-        (accessToken, refreshToken, profile, done) => {
-            // You can perform database operations here to store or retrieve user data
-            return done(null, profile);
-        }
-    )
-);
+// passport.use(
+//     new GoogleStrategy(
+//         {
+//             clientID: process.env.CLIENT_ID ,
+//             clientSecret: process.env.SECRET_ID ,
+//             callbackURL: 'http://localhost:8000/auth/google/callback',
+//         },
+//         (accessToken, refreshToken, profile, done) => {
+//             // You can perform database operations here to store or retrieve user data
+//             return done(null, profile);
+//         }
+//     )
+// );
 
-passport.serializeUser((user, done) => {
-    done(null, user);
-});
+// passport.serializeUser((user, done) => {
+//     done(null, user);
+// });
 
-passport.deserializeUser((user, done) => {
-    done(null, user);
-});
+// passport.deserializeUser((user, done) => {
+//     done(null, user);
+// });
 
-// Initialize Passport and session
-app.use(session({ secret: process.env.SECRET_ID , resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
+// // Initialize Passport and session
+// app.use(session({ secret: process.env.SECRET_ID , resave: true, saveUninitialized: true }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
-// Google OAuth routes
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-    res.redirect('http://localhost:3000/feedhome');
-});
+// // Google OAuth routes
+// app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+// app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+//     res.redirect('http://localhost:3000/feedhome');
+// });
