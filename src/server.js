@@ -43,7 +43,7 @@ const io = new Server( server,{
 
 
 //CORS
-const allowedOrigins = ['http://localhost:3000'];
+const allowedOrigins = ['https://connectify-cyan.vercel.app/'];
 app.use(
     cors({
         origin: function (origin, callback) {

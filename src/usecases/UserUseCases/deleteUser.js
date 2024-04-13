@@ -1,4 +1,4 @@
-import { deleteOneUser, deletePostsByUser ,deleteCommentLikeByUser} from "../../repositories/userRepository.js";
+import { deleteOneUser, deletePostsByUser } from "../../repositories/userRepository.js";
 
 
 export const deleteUserAndPosts = async (id) => {
