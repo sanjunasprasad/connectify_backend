@@ -18,7 +18,7 @@ import {Server} from "socket.io"
 // const port = process.env.PORT || 3000
 const PORT = 8000
 const app = express();
-app.use(cors());
+// app.use(cors());
 configDotenv()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
