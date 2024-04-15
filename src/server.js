@@ -33,7 +33,7 @@ connectDB();
 const server = http.createServer(app)
 const io = new Server( server,{
     cors: {
-      origin: "https://connectify-cyan.vercel.app/",
+      origin: "https://connectify-cyan.vercel.app",
       methods: ["GET" , "POST"],
       credentials : false,
     },
@@ -45,7 +45,7 @@ const io = new Server( server,{
 
 
 //CORS
-const allowedOrigins = ['https://connectify-cyan.vercel.app/'];
+const allowedOrigins = ['https://connectify-cyan.vercel.app'];
 app.use(
     cors({
         origin: function (origin, callback) {
