@@ -18,7 +18,6 @@ import {Server} from "socket.io"
 // const port = process.env.PORT || 3000
 const PORT = 8000
 const app = express();
-// app.use(cors());
 dotenv.config()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -85,7 +84,7 @@ io.on("connection", (socket) => {
     // if user is not added previously
     if (!activeUsers.some((user) => user.userId === newUserId)) {
       activeUsers.push({ userId: newUserId, socketId: socket.id });
-      console.log("New User Connected", activeUsers);
+      // console.log("New User Connected", activeUsers);
     }
     // send all active users to new user
     io.emit("get-users", activeUsers);
@@ -94,7 +93,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     // remove user from active users
     activeUsers = activeUsers.filter((user) => user.socketId !== socket.id);
-    console.log("User Disconnected", activeUsers);
+    // console.log("User Disconnected", activeUsers);
     // send all active users to all users
     io.emit("get-users", activeUsers);
   });
@@ -103,8 +102,8 @@ io.on("connection", (socket) => {
   socket.on("send-message", (data) => {
     const { receiverId } = data;
     const user = activeUsers.find((user) => user.userId === receiverId);
-    console.log("Sending from socket to receiver :", receiverId)
-    console.log("Data: ", data)
+    // console.log("Sending from socket to receiver :", receiverId)
+    // console.log("Data: ", data)
     if (user) {
       io.to(user.socketId).emit("recieve-message", data);
     }

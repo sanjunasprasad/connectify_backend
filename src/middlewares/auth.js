@@ -10,7 +10,7 @@ export const generateUserToken = async(existingUser) => {
         const payload = {
             userId: _id,
         }
-        console.log("JWT KEYYYY",process.env.JWT_KEY)
+       
         const token = Jwt.sign(payload, JWT_KEY, { expiresIn: '3h' });
         console.log('userToken:', JSON.stringify(token));
         // console.log("type of user token",typeof(token))
