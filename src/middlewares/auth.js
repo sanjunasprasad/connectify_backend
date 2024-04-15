@@ -1,5 +1,8 @@
 import Jwt from 'jsonwebtoken'
 
+const JWT_KEY = '9rXq5bF2nS7zQ8'
+const JWT_ADMIN_KEY = '6rXq532nS7zQ8'
+
 export const generateUserToken = async(existingUser) => {
     try {
         const {_id } = existingUser;
@@ -8,7 +11,7 @@ export const generateUserToken = async(existingUser) => {
             userId: _id,
         }
         console.log("JWT KEYYYY",process.env.JWT_KEY)
-        const token = Jwt.sign(payload, process.env.JWT_KEY, { expiresIn: '3h' });
+        const token = Jwt.sign(payload, JWT_KEY, { expiresIn: '3h' });
         console.log('userToken:', JSON.stringify(token));
         // console.log("type of user token",typeof(token))
         return token;
@@ -23,7 +26,7 @@ export const decodeToken = async(req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '');
         // console.log("token from frontend axios header ",token)
-        Jwt.verify(token, process.env.JWT_KEY, (err, decodedToken) => {
+        Jwt.verify(token, JWT_KEY, (err, decodedToken) => {
             if (err) {
                 return res.status(401).json({ message: 'Unauthorized Access' });
             }
@@ -60,7 +63,7 @@ export const decodeAdminToken = async(req, res, next) => {
         
         const token = req.header('Authorization').replace('Bearer ', '');
         // console.log("token from frontend axios header :",token)
-        Jwt.verify(token, process.env.JWT_KEY, (err, decodedToken) => {
+        Jwt.verify(token, JWT_ADMIN_KEY, (err, decodedToken) => {
             if (err) {
                 return res.status(401).json({ message: 'Unauthorized Access' });
             }
