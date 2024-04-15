@@ -1,5 +1,5 @@
 import express from 'express';
-import session from 'express-session';
+// import session from 'express-session';
 import connectDB from './config/mongo.js';
 import cors from 'cors'
 import userRoute from './interfaces/routes/userRoutes.js';
