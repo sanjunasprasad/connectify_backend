@@ -34,7 +34,11 @@ const server = http.createServer(app)
 const io = new Server( server,{
     cors: {
       origin: "https://connectify-cyan.vercel.app/",
+      methods: ["GET" , "POST"],
+      credentials : false,
     },
+    transports: ["websocket" ,"polling"],
+    allowEIO3 : true,
   });
 
 
