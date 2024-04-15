@@ -8,7 +8,7 @@ import postRoute from './interfaces/routes/postRoutes.js';
 import friendRoute from './interfaces/routes/friendRoutes.js'
 import chatRoute from './interfaces/routes/ChatRoute.js';
 import messageRoute from './interfaces/routes/MessageRoute.js';
-import {configDotenv} from "dotenv"
+import dotenv from "dotenv"
 import http from "http"
 import {Server} from "socket.io"
 
@@ -19,7 +19,7 @@ import {Server} from "socket.io"
 const PORT = 8000
 const app = express();
 // app.use(cors());
-configDotenv()
+dotenv.config()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static('public'));
