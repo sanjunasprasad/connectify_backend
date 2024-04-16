@@ -2,7 +2,7 @@ import {checkLogin} from '../../usecases/AdminUseCases/checkAdmin.js'
 import { getUsers  } from '../../usecases/AdminUseCases/getUsers.js';
 import {blockUsers} from '../../usecases/AdminUseCases/blockUsers.js'
 import { deleteUser } from '../../usecases/AdminUseCases/deleteUser.js';
-import {getReporteduser} from '../../usecases/AdminUseCases/getReportUser.js';
+import {getReporteduser} from '../../usecases/AdminUseCases/getReportUser.js'
 import {deactivate} from '../../usecases/AdminUseCases/deactivateUser.js'
 
 export const adminLogin = async(req, res) => {
