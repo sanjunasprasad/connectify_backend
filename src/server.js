@@ -14,7 +14,7 @@ import {Server} from "socket.io"
 
 
 
-const port = process.env.PORT 
+const port = process.env.PORT || 4500
 const app = express();
 dotenv.config()
 app.use(express.json())
