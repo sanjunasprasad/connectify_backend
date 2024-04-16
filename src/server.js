@@ -1,5 +1,4 @@
 import express from 'express';
-// import session from 'express-session';
 import connectDB from './config/mongo.js';
 import cors from 'cors'
 import userRoute from './interfaces/routes/userRoutes.js';
@@ -15,8 +14,7 @@ import {Server} from "socket.io"
 
 
 
-// const port = process.env.PORT || 3000
-const PORT = 8000
+const port = process.env.PORT || 3000
 const app = express();
 dotenv.config()
 app.use(express.json())
@@ -71,8 +69,8 @@ app.use('/chat',chatRoute);
 app.use('/messages',messageRoute);
 
 
-app.listen(PORT, () => {
-    console.log(`server started at PORT ${PORT}`)
+app.listen(port, () => {
+    console.log(`server started at PORT ${port}`)
 });
 
 
@@ -113,39 +111,3 @@ io.on("connection", (socket) => {
 
 
 
-//GOOGLE SIGNIN
-
-// Configure Passport.js
-// passport.use(
-//     new GoogleStrategy(
-//         {
-//             clientID: process.env.CLIENT_ID ,
-//             clientSecret: process.env.SECRET_ID ,
-//             callbackURL: 'http://localhost:8000/auth/google/callback',
-//         },
-//         (accessToken, refreshToken, profile, done) => {
-//             // You can perform database operations here to store or retrieve user data
-//             return done(null, profile);
-//         }
-//     )
-// );
-
-// passport.serializeUser((user, done) => {
-//     done(null, user);
-// });
-
-// passport.deserializeUser((user, done) => {
-//     done(null, user);
-// });
-
-// // Initialize Passport and session
-// app.use(session({ secret: process.env.SECRET_ID , resave: true, saveUninitialized: true }));
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-
-// // Google OAuth routes
-// app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-// app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-//     res.redirect('http://localhost:3000/feedhome');
-// });

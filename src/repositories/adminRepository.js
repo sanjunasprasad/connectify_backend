@@ -1,12 +1,15 @@
 import User from "../entities/userModel.js";
 
-// to get all users
 export const getAllUsers = async () => {
-
-  const userData = await User.find().lean();
-  // console.log("reached last of loaduser admin repo:",userData);
-  return userData
+  try {
+    const userData = await User.find().lean();
+    return userData;
+  } catch (error) {
+    console.error("An error occurred while fetching all users:", error);
+    return { message: "An error occurred while fetching all users" };
+  }
 };
+
 
 //block/unblock
 export const updateUserstatus = async (id, isBlocked) => {
@@ -29,19 +32,30 @@ export const updateUserstatus = async (id, isBlocked) => {
 
 // to delete user
 export const deleteOneUser = async (id) => {
-  const response = await User.findByIdAndDelete(id);
-  if (response) {
-    return response;
-  } else {
-    return { message: "User not found" };
+  try {
+    const response = await User.findByIdAndDelete(id);
+    if (response) {
+      return response;
+    } else {
+      return { message: "User not found" };
+    }
+  } catch (error) {
+    console.error("An error occurred while deleting user:", error);
+    return { message: "An error occurred while deleting user" };
   }
 };
 
-export const getReportProfile = async() =>{
+
+export const getReportProfile = async () => {
+  try {
     const reportedUsers = await User.find({ reports: { $exists: true, $ne: [] } }).populate('reports.reportedBy');
-    // console.log("from last stage list",reportedUsers)
-    return  reportedUsers
-}
+    return reportedUsers;
+  } catch (error) {
+    console.error("An error occurred while fetching reported users:", error);
+    return { message: "An error occurred while fetching reported users" };
+  }
+};
+
 
 export const updateStatus = async(id,status)=>{
   try {

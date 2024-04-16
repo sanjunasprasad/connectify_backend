@@ -3,18 +3,28 @@ import Post from  '../entities/postModel.js'
 
 
 //user registration
-export const saveUser = async (firstName, lastName, phoneNo, email, password, is_blocked,status) => {
-    const user = new User({ firstName, lastName, phoneNo, email, password,is_blocked, status});
-    return  user.save();
-    
-}
+export const saveUser = async (firstName, lastName, phoneNo, email, password, is_blocked, status) => {
+  try {
+    const user = new User({ firstName, lastName, phoneNo, email, password, is_blocked, status });
+    return user.save();
+  } catch (error) {
+    console.error("An error occurred while saving the user:", error);
+    return { message: "An error occurred while saving the user" };
+  }
+};
+
 
 //from login to verify token
 export const checkUser = async (email) => {
-    const existingUserData = await User.findOne({email:email});
+  try {
+    const existingUserData = await User.findOne({ email: email });
     // console.log("from repo existingUserData:",existingUserData)
     return existingUserData;
-}
+  } catch (error) {
+    console.error("An error occurred while checking user:", error);
+    return { message: "An error occurred while checking user" };
+  }
+};
 
 
 //after login userhomepage
@@ -28,8 +38,13 @@ export const findOneUser = async (id) => {
 
 //for admin to get all users
 export const getAllUsers = async () => {
+  try {
     return await User.find().lean();
-  };
+  } catch (error) {
+    console.error("An error occurred while fetching all users:", error);
+    return { message: "An error occurred while fetching all users" };
+  }
+};
 
 
 
@@ -66,9 +81,15 @@ export const deleteOneUser = async (id) => {
 
 // Delete posts associated with the user
 export const deletePostsByUser = async (userId) => {
-  const response = await Post.deleteMany({ user: userId });
-  console.log("DELETE USER POST:",response)
-  return response;
+  try {
+    const response = await Post.deleteMany({ user: userId });
+    console.log("DELETE USER POST:", response);
+    return response;
+  } catch (error) {
+    console.error("An error occurred while deleting posts by user:", error);
+    return { message: "An error occurred while deleting posts by user" };
+  }
 };
+
 
 
