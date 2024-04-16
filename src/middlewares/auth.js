@@ -22,23 +22,32 @@ export const generateUserToken = async(existingUser) => {
 
 export const decodeToken = async(req, res, next) => {
     try {
-        const token = req.header('Authorization').replace('Bearer ', '');
-        // console.log("token from frontend axios header ",token)
+        console.log("##############")
+        let token = null
+        console.log("header",req.headers)
+        const header = req.headers.authorization
+        if (header !== undefined ){
+             token = header.split(" ")[1]
+            console.log("TOKEN in decode:: ",token)
+        }
+        const Role = req.headers.role;
+        console.log("ROLE is in decode:",Role)
+        if( !token || Role !== 'user'){
+            return res.status(403).json({ message: 'Forbidden. Insufficient role.' });
+        }
+        
         Jwt.verify(token, process.env.JWT_KEY, (err, decodedToken) => {
             if (err) {
                 return res.status(401).json({ message: 'Unauthorized Access' });
             }
             req.token = decodedToken;
-            const Role = req.headers.role;
-            // console.log("role is",Role)
-            if(Role !== 'user'){
-                return res.status(403).json({ message: 'Forbidden. Insufficient role.' });
-            }
+            console.log("decode tokn:",req.token)
             next();
         });
+
     } catch (error) {
-        console.error("Error decoding token:", error);
-        return res.status(500).json({ message: 'Internal Server Error' });
+        console.error("Error decoding token 1111:", error);
+        return res.status(500).json({ message: 'Internal Server Error1111' });
     }
 }
 
