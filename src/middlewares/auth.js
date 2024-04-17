@@ -22,16 +22,15 @@ export const generateUserToken = async(existingUser) => {
 
 export const decodeToken = async(req, res, next) => {
     try {
-        console.log("##############")
         let token = null
-        console.log("header",req.headers)
+        // console.log("header",req.headers)
         const header = req.headers.authorization
         if (header !== undefined ){
              token = header.split(" ")[1]
-            console.log("TOKEN in decode:: ",token)
+            // console.log("TOKEN in decode:: ",token)
         }
         const Role = req.headers.role;
-        console.log("ROLE is in decode:",Role)
+        // console.log("ROLE is in decode:",Role)
         if( !token || Role !== 'user'){
             return res.status(403).json({ message: 'Forbidden. Insufficient role.' });
         }
@@ -41,7 +40,7 @@ export const decodeToken = async(req, res, next) => {
                 return res.status(401).json({ message: 'Unauthorized Access' });
             }
             req.token = decodedToken;
-            console.log("decode tokn:",req.token)
+            // console.log("decode tokn:",req.token)
             next();
         });
 
@@ -69,14 +68,14 @@ export const decodeAdminToken = async(req, res, next) => {
     try {
         
         const token = req.header('Authorization').replace('Bearer ', '');
-        // console.log("token from frontend axios header :",token)
+        console.log("ADMIN token  :",token)
         Jwt.verify(token, process.env.JWT_ADMIN_KEY, (err, decodedToken) => {
             if (err) {
                 return res.status(401).json({ message: 'Unauthorized Access' });
             }
             req.token = decodedToken;
             const Role = req.headers.role;
-            // console.log("role is",Role)
+            console.log("ROLE  is",Role)
             if(Role !== 'admin'){
                 return res.status(403).json({ message: 'Forbidden, Insufficient role.' });
             }

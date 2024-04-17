@@ -10,8 +10,8 @@ userRoute.post('/userRegister',  userRegister);
 userRoute.post('/otpVerify',  otpVerify);
 userRoute.get('/resendotp',  resendotp);
 userRoute.post('/userLogin', userLogin);
-userRoute.post('/forgotPassword', forgotPassword); // verify email to generate & send otp
-userRoute.post('/resetPassword',resetPassword)
+userRoute.post('/forgotPassword',decodeToken, forgotPassword); // verify email to generate & send otp
+userRoute.post('/resetPassword',decodeToken,resetPassword)
 userRoute.get('/userProfile', decodeToken, fetchProfile); //get logged user home,profile
 userRoute.put('/updateUser/:id', decodeToken,upload.single('file'),updateUser);
 userRoute.delete('/DeleteUser/:id', decodeToken,deleteUser);
