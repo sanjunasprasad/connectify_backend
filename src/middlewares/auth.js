@@ -27,10 +27,10 @@ export const decodeToken = async(req, res, next) => {
         const header = req.headers.authorization
         if (header !== undefined ){
              token = header.split(" ")[1]
-            // console.log("TOKEN in decode:: ",token)
+            console.log("USER TOKEN in decode:: ",token)
         }
         const Role = req.headers.role;
-        // console.log("ROLE is in decode:",Role)
+        console.log("USER ROLE is in decode:",Role)
         if( !token || Role !== 'user'){
             return res.status(403).json({ message: 'Forbidden. Insufficient role.' });
         }
@@ -40,13 +40,13 @@ export const decodeToken = async(req, res, next) => {
                 return res.status(401).json({ message: 'Unauthorized Access' });
             }
             req.token = decodedToken;
-            // console.log("decode tokn:",req.token)
+            console.log("decode tokn111 USER:",req.token)
             next();
         });
 
     } catch (error) {
-        console.error("Error decoding token 1111:", error);
-        return res.status(500).json({ message: 'Internal Server Error1111' });
+        console.error("Error decoding token 1111USER:", error);
+        return res.status(500).json({ message: 'Internal Server Error1111USER' });
     }
 }
 
