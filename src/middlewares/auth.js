@@ -40,7 +40,7 @@ export const decodeToken = async(req, res, next) => {
                 return res.status(401).json({ message: 'Unauthorized Access' });
             }
             req.token = decodedToken;
-            console.log("decode tokn111 USER:",req.token)
+            // console.log("decode tokn111 USER:",req.token)
             next();
         });
 

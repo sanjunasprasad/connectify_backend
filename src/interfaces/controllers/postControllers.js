@@ -33,8 +33,11 @@ export const createPost = async (req, res) => {
       file: fileUrl,
       user: userData._id,
     });
+    console.log("newpost before saving", newPost)
     const savedPost = await newPost.save();
+    console.log("newpost after saving", savedPost)
     return res.status(201).json(savedPost);
+  
   } catch (error) {
     console.error("Error creating post:", error);
     res.status(500).json({ message: "Internal server error" });
