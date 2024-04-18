@@ -115,39 +115,39 @@ io.on("connection", (socket) => {
 //GOOGLE SIGNIN
 
 // Configure Passport.js
-passport.use(
-  new GoogleStrategy(
-      {
-          clientID: process.env.CLIENT_ID ,
-          clientSecret: process.env.SECRET_ID ,
-          callbackURL: 'https://connectifyy.site/auth/google/callback',
-      },
-      (accessToken, refreshToken, profile, done) => {
-          // You can perform database operations here to store or retrieve user data
-          return done(null, profile);
-      }
-  )
-);
+// passport.use(
+//   new GoogleStrategy(
+//       {
+//           clientID: process.env.CLIENT_ID ,
+//           clientSecret: process.env.SECRET_ID ,
+//           callbackURL: 'https://connectifyy.site/auth/google/callback',
+//       },
+//       (accessToken, refreshToken, profile, done) => {
+//           // You can perform database operations here to store or retrieve user data
+//           return done(null, profile);
+//       }
+//   )
+// );
 
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
+// passport.serializeUser((user, done) => {
+//   done(null, user);
+// });
 
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
+// passport.deserializeUser((user, done) => {
+//   done(null, user);
+// });
 
-// Initialize Passport and session
-app.use(session({ secret: process.env.SECRET_ID , resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
+// // Initialize Passport and session
+// app.use(session({ secret: process.env.SECRET_ID , resave: true, saveUninitialized: true }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
-// Google OAuth routes
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-  res.redirect('https://connectify-cyan.vercel.app/feedhome');
-});
+// // Google OAuth routes
+// app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+// app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+//   res.redirect('https://connectify-cyan.vercel.app/feedhome');
+// });
 
 
 
