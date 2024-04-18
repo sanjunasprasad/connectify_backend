@@ -23,7 +23,7 @@ export const generateUserToken = async(existingUser) => {
 export const decodeToken = async(req, res, next) => {
     try {
         let token = null
-        console.log("header",req.headers)
+        console.log("USER HEADER",req.headers)
         const header = req.headers.authorization
         if (header !== undefined ){
              token = header.split(" ")[1]
