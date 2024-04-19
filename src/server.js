@@ -20,9 +20,9 @@ const app = express();
 dotenv.config()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(express.static('public'));
-app.use('/public/videos', express.static(path.join('public/videos')))
-app.use('/public/image', express.static(path.join('public/image')));
+app.use("/",express.static(path.join(__dirname,'public')));
+app.use('/public/videos', express.static(path.join(__dirname,'public/videos')))
+app.use('/public/image', express.static(path.join(__dirname,'public/image')));
 connectDB();
 
 
