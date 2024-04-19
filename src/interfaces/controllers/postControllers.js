@@ -3,49 +3,6 @@ import User from "../../entities/userModel.js";
 import cloudinary from "../../config/cloudinary.js";
 
 
-// export const createPost = async (req, res) => {
-//   try {
-   
-//     let fileUrl;
-//     const { caption, user } = req.body;
-//     const userData = JSON.parse(user);
-//     const file = req.file;
-//     const paths = req.file.path;
-//     console.log("User Data:", userData);
-//     console.log("caption:", caption);
-//     console.log("1)file from multer", file);
-//     console.log("2)File mimetype:", file.mimetype);
-//     console.log("3)path from multer is", paths);
-//     const folder = "posts_folder";
-//     if (file.mimetype.startsWith("video/mp4")) {
-//       console.log("4)path video", paths);
-//       fileUrl = paths;
-//     } else {
-//       let cloudinaryResponse = await cloudinary.uploader.upload(file.path, {
-//         folder: folder,
-//       });
-//       // console.log("path image", cloudinaryResponse);
-//       fileUrl = cloudinaryResponse.secure_url;
-//       console.log("fileurl of image", fileUrl);
-//     }
-//     const newPost = new Post({
-//       caption,
-//       file: fileUrl,
-//       user: userData._id,
-//     });
-//     console.log("newpost before saving", newPost)
-//     const savedPost = await newPost.save();
-//     console.log("newpost after saving", savedPost)
-//     return res.status(201).json(savedPost);
-  
-//   } catch (error) {
-//     console.error("Error creating post:", error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// };
-
-
-//
 export const createPost = async (req, res) => {
   try {
    
@@ -54,23 +11,24 @@ export const createPost = async (req, res) => {
     const userData = JSON.parse(user);
     const file = req.file;
     const paths = req.file.path;
-    console.log("User Data:", userData);
-    console.log("caption:", caption);
-    console.log("1)file from multer", file);
-    console.log("2)File mimetype:", file.mimetype);
-    console.log("3)path from multer is", paths);
+    // console.log("User Data:", userData);
+    // console.log("caption:", caption);
+    // console.log("1)file from multer", file);
+    // console.log("2)File mimetype:", file.mimetype);
+    // console.log("3)path from multer is", paths);
     const folder = "posts_folder";
-    
-
-
+    if (file.mimetype.startsWith("video/mp4")) {
+      console.log("4)path video", paths);
+      fileUrl = paths;
+    } else {
       let cloudinaryResponse = await cloudinary.uploader.upload(file.path, {
         folder: folder,
-        resource_type: 'auto'
+           resource_type: 'auto'
       });
       // console.log("path image", cloudinaryResponse);
       fileUrl = cloudinaryResponse.secure_url;
       console.log("fileurl of image", fileUrl);
-    
+    }
     const newPost = new Post({
       caption,
       file: fileUrl,
@@ -86,6 +44,13 @@ export const createPost = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
+
+
+
+
+
 
 
 //load our post
