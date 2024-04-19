@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
         cb(null, 'public/videos'); 
       } else {
         console.log("image post destination")
-        cb(null, 'public/image'); 
+        cb(null, '/image'); 
       }
     } catch (err) {
       console.error("Error in setting destination:", err);
