@@ -42,18 +42,30 @@ const io = new Server( server,{
 
 
 //CORS
-const allowedOrigins = ['https://connectify-cyan.vercel.app'];
+// const allowedOrigins = ['https://connectify-cyan.vercel.app'];
+// app.use(
+//     cors({
+//         origin: function (origin, callback) {
+//             if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+//                 callback(null, true);
+//             } else {
+//                 callback(new Error('Not allowed by CORS'));
+//             }
+//         },
+//         credentials: false,
+//     })
+// );
+
 app.use(
-    cors({
-        origin: function (origin, callback) {
-            if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-                callback(null, true);
-            } else {
-                callback(new Error('Not allowed by CORS'));
-            }
-        },
-        credentials: false,
-    })
+  cors({
+    
+
+    origin: 'https://connectify-cyan.vercel.app',
+    methods: 'GET, PUT, POST, DELETE, PATCH',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    credentials: true, // Allow cookies to be sent in cross-origin requests
+  })
 );
 
 
