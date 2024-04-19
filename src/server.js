@@ -10,7 +10,15 @@ import messageRoute from './interfaces/routes/MessageRoute.js';
 import dotenv from "dotenv"
 import http from "http"
 import {Server} from "socket.io"
-import path from "path"
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+
 
 
 
@@ -21,9 +29,10 @@ dotenv.config()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 //app.use("/",express.static('public'));
-app.use('/public/videos', express.static('public/videos'))
-app.use('/public/image', express.static('public/image'));
+// app.use('/public/videos', express.static('public/videos'))
+// app.use('/public/image', express.static('public/image'));
 connectDB();
+app.use("/", express.static(join(__dirname, 'public')));
 
 
 
