@@ -38,7 +38,7 @@ connectDB();
 const server = http.createServer(app)
 const io = new Server( server,{
     cors: {
-      origin: "https://connectify-cyan.vercel.app",
+      origin: "https://connectify-omega-mauve.vercel.app",
       methods: ["GET" , "POST"],
       credentials : false,
     },
@@ -49,7 +49,7 @@ const io = new Server( server,{
 
 app.use(
   cors({
-    origin: 'https://connectify-cyan.vercel.app', 
+    origin: 'https://connectify-omega-mauve.vercel.app', 
     methods: 'GET, PUT, POST, DELETE, PATCH',
     preflightContinue: false,
     optionsSuccessStatus: 204,
