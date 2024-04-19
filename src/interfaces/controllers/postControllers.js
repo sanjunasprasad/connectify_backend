@@ -12,8 +12,8 @@ export const createPost = async (req, res) => {
     const file = req.file;
     const paths = req.file.path;
     console.log("User Data:", userData);
-    // console.log("caption:", caption);
-    // console.log("1)file from multer", file);
+    console.log("caption:", caption);
+    console.log("1)file from multer", file);
     // console.log("2)File mimetype:", file.mimetype);
     // console.log("3)path from multer is", paths);
     const folder = "posts_folder";
