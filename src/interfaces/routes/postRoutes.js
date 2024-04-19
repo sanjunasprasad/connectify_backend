@@ -7,7 +7,7 @@ import {createPost,loadPost,loadownPost,likePost,likedUsers,commentPost,deletePo
 
 
 
-postRoute.post('/createPost',upload.single('file'), createPost);
+postRoute.post('/createPost',decodeToken,upload.single('file'), createPost);
 postRoute.get('/loadownPost',decodeToken,loadownPost); //own post load
 postRoute.get('/loadPost/:userId', decodeToken,loadPost);//restricted post load
 postRoute.put('/likepost/:postid',decodeToken,likePost) // post like,unlike
