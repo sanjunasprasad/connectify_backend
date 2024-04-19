@@ -58,12 +58,11 @@ const io = new Server( server,{
 
 app.use(
   cors({
-    // origin: 'https://connectify-cyan.vercel.app', 
-    origin: '*',
+    origin: 'https://connectify-cyan.vercel.app', 
     methods: 'GET, PUT, POST, DELETE, PATCH',
     preflightContinue: false,
     optionsSuccessStatus: 204,
-    credentials: true, // Allow cookies to be sent in cross-origin requests
+    credentials: false // Allow cookies to be sent in cross-origin requests
   })
 );
 
