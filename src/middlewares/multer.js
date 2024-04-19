@@ -4,9 +4,9 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     try {
       if (file.mimetype.startsWith('video/')) {
-        cb(null, './public/videos'); 
+        cb(null, 'public/videos'); 
       } else {
-        cb(null, './public/image'); 
+        cb(null, 'public/image'); 
       }
     } catch (err) {
       console.error("Error in setting destination:", err);
