@@ -10,13 +10,8 @@ import messageRoute from './interfaces/routes/MessageRoute.js';
 import dotenv from "dotenv"
 import http from "http"
 import {Server} from "socket.io"
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
 
 
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 
 
@@ -28,7 +23,9 @@ const app = express();
 dotenv.config()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use("/", express.static(join(__dirname, 'public')));
+app.use(express.static('public'));
+app.use('/public/videos', express.static('public/videos'));
+app.use('/public/image', express.static('public/image'));
 connectDB();
 
 
@@ -46,10 +43,10 @@ const io = new Server( server,{
     allowEIO3 : true,
   });
 
-
+const allowedOrigins = ['https://connectify-omega-mauve.vercel.app']
 app.use(
   cors({
-    origin: 'https://connectify-omega-mauve.vercel.app', 
+    origin: allowedOrigins, 
     methods: 'GET, PUT, POST, DELETE, PATCH',
     preflightContinue: false,
     optionsSuccessStatus: 204,

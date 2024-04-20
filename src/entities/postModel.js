@@ -12,12 +12,12 @@ const postSchema = new mongoose.Schema({
     required: true,
   },
   likes: [{
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        unique: true,
-      },
-    }],
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+       
+    },
+  }],
   comments: [
     {
       user: {

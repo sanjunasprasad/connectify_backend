@@ -29,12 +29,14 @@ export const createPost = async (req, res) => {
       fileUrl = cloudinaryResponse.secure_url;
       console.log("fileurl of image", fileUrl);
     }
+    console.log("userrrrrr",userData._id)
     const newPost = new Post({
       caption,
       file: fileUrl,
       user: userData._id,
     });
     console.log("newpost before saving", newPost)
+    
     const savedPost = await newPost.save();
     console.log("newpost after saving", savedPost)
     return res.status(201).json(savedPost);
