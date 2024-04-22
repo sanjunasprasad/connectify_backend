@@ -24,7 +24,7 @@ export const createChat = async (req, res) => {
     console.log("New chat:", result);
     res.status(200).json(result);
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error from chat:", error);
     res.status(500).json(error);
   }
 };
