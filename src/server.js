@@ -23,9 +23,9 @@ const app = express();
 dotenv.config()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(express.static('public'));
-app.use('/public/videos', express.static('public/videos'));
-app.use('/public/image', express.static('public/image'));
+// app.use(express.static('public'));
+// app.use('/public/videos', express.static('public/videos'));
+// app.use('/public/image', express.static('public/image'));
 connectDB();
 
 
