@@ -126,13 +126,13 @@ export const resetPassword = async(req,res) =>{
 export const updateUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    const { firstName, email, bio, location , file } = req.body;
+    const { firstName, email, bio, location , image } = req.body;
     console.log("id is", userId);
     console.log("name is", firstName);
     console.log("email is", email);
     console.log("bio is", bio);
     console.log("location is", location);
-    console.log("file is", file);
+    console.log("file is", image);
     const response = await editUser(userId, { firstName, email, bio, location , image });
     console.log("profile update response",response)
     return res.status(200).json(response);
