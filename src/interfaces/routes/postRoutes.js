@@ -1,13 +1,12 @@
 import {Router} from 'express'
 const postRoute = Router();
 import { decodeToken } from '../../middlewares/auth.js';
-import { upload } from '../../middlewares/multer.js';
 import {createPost,loadPost,loadownPost,likePost,likedUsers,commentPost,deletePost,savedPost,getSavedPost,editPost} from "../controllers/postControllers.js"
 
 
 
 
-postRoute.post('/createPost',decodeToken,upload.single('file'), createPost);
+postRoute.post('/createPost',decodeToken, createPost);
 postRoute.get('/loadownPost',decodeToken,loadownPost); //own post load
 postRoute.get('/loadPost/:userId', decodeToken,loadPost);//restricted post load
 postRoute.put('/likepost/:postid',decodeToken,likePost) // post like,unlike
