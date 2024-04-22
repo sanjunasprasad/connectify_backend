@@ -24,11 +24,24 @@ dotenv.config()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static('public'));
-// app.use('/public/videos', express.static('public/videos'));
 app.use('/public/image', express.static('public/image'));
 connectDB();
 
 
+
+
+
+
+const allowedOrigins = ['https://connectify-omega-mauve.vercel.app']
+app.use(
+  cors({
+    origin: allowedOrigins, 
+    methods: 'GET, PUT, POST, DELETE, PATCH',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    credentials: true // Allow cookies to be sent in cross-origin requests
+  })
+);
 
 
 //SOCKET
@@ -42,18 +55,6 @@ const io = new Server( server,{
     transports: ["websocket" ,"polling"],
     allowEIO3 : true,
   });
-
-const allowedOrigins = ['https://connectify-omega-mauve.vercel.app']
-app.use(
-  cors({
-    origin: allowedOrigins, 
-    methods: 'GET, PUT, POST, DELETE, PATCH',
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-    credentials: true // Allow cookies to be sent in cross-origin requests
-  })
-);
-
 
 
 

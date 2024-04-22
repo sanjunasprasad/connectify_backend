@@ -126,21 +126,15 @@ export const resetPassword = async(req,res) =>{
 export const updateUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    const { firstName, email, bio, location } = req.body;
-    const file = req.file
-    // console.log("id is", userId);
-    // console.log("name is", firstName);
-    // console.log("email is", email);
-    // console.log("bio is", bio);
-    // console.log("location is", location);
-    // console.log("file is", file);
-    const folder = "posts_folder";
-    // Assuming 'file' is defined somewhere, otherwise adjust accordingly
-    const cloudinaryResponse = await cloudinary.uploader.upload(req.file.path, {
-      folder: folder,
-    });
-    // console.log("url is",cloudinaryResponse)
-    const response = await editUser(userId, { firstName, email, bio, location }, cloudinaryResponse.secure_url);
+    const { firstName, email, bio, location , file } = req.body;
+    console.log("id is", userId);
+    console.log("name is", firstName);
+    console.log("email is", email);
+    console.log("bio is", bio);
+    console.log("location is", location);
+    console.log("file is", file);
+    const response = await editUser(userId, { firstName, email, bio, location , image });
+    console.log("profile update response",response)
     return res.status(200).json(response);
   } catch (err) {
     console.log(err);

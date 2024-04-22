@@ -11,7 +11,6 @@ postRoute.get('/loadownPost',decodeToken,loadownPost); //own post load
 postRoute.get('/loadPost/:userId', decodeToken,loadPost);//restricted post load
 postRoute.put('/likepost/:postid',decodeToken,likePost) // post like,unlike
 postRoute.get('/likedusers/:postId',decodeToken,likedUsers)
-
 postRoute.post('/commentpost/:postid',decodeToken, commentPost); 
 postRoute.delete('/deletePost/:postId',decodeToken, deletePost); 
 postRoute.post('/savePost/:postId',decodeToken,savedPost);
