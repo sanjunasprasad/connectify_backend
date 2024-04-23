@@ -16,5 +16,4 @@ userRoute.put('/updateUser/:id', decodeToken,updateUser);
 userRoute.delete('/DeleteUser/:id', decodeToken,deleteUser);
 
 
-
 export default userRoute;

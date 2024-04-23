@@ -5,7 +5,6 @@ import { editUser } from '../../usecases/UserUseCases/editUser.js';
 import { deleteUserAndPosts} from '../../usecases/UserUseCases/deleteUser.js';
 import { generateOTP, sendOTPByEmail } from '../../services/otpService.js';
 import User from  "../../entities/userModel.js"
-import cloudinary from "../../config/cloudinary.js";
 import bcrypt from 'bcrypt';
 
 
