@@ -236,6 +236,29 @@ export const getSavedPost = async(req, res) => {
 }
 
 
+
+export const unSavePost = async(req,res) =>{
+  try {
+    const { userId, postId } = req.body; 
+    console.log("useri,postid",userId,postId)
+    if (!userId || !postId) {
+      return res.status(400).json({ error: 'User ID and post ID are required' });
+    }
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    user.savedPosts.pull(postId);
+    const response = await user.save();
+    // console.log("unsaveeee",response)
+    return res.status(200).json({ message: 'Post unsaved successfully' });
+  } catch (error) {
+    console.error('Error unsaving post:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+
 export const editPost = async(req,res) =>{
   try {
     const postId = req.params.postId;

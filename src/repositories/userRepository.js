@@ -48,18 +48,17 @@ export const getAllUsers = async () => {
 
 
 
-  //from user to edit
-  export const updateUser = async (id, userData, image) => {
+   //from user to edit
+  export const updateUser = async (userId, userData) => {
     try {
-      const { firstName, lastName, phoneNo, email, password, bio, location } = userData;
-      const updateData = { firstName, lastName, phoneNo, email, password, bio, location };
-      if (image) {
-        updateData.image = image;
-      }
-      return await User.findByIdAndUpdate(id, updateData, { new: true });
+      const { firstName,  phoneNo, email, password, bio, location ,image } = userData;
+      const updateData = { firstName,  phoneNo, email, password, bio, location  ,image};
+      const response = await User.findByIdAndUpdate(userId, updateData, { new: true });
+      console.log("final update",response)
+      return response 
     } catch (err) {
       console.log(err);
-      throw err; // Re-throw the error for handling in the usecase layer
+      throw err; 
     }
   };
   

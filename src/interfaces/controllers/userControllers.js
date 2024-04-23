@@ -123,21 +123,25 @@ export const resetPassword = async(req,res) =>{
 
 //user update
 export const updateUser = async (req, res) => {
+  const userId = req.params.id;
+  const { firstName, email, bio, location, image } = req.body;
+  console.log("User ID:", userId);
+  console.log("First Name:", firstName);
+  console.log("Email:", email);
+  console.log("Bio:", bio);
+  console.log("Location:", location);
+  console.log("Image:", image);
+
   try {
-    const userId = req.params.id;
-    const { firstName, email, bio, location , image } = req.body;
-    console.log("id is", userId);
-    console.log("name is", firstName);
-    console.log("email is", email);
-    console.log("bio is", bio);
-    console.log("location is", location);
-    console.log("file is", image);
-    const response = await editUser(userId, { firstName, email, bio, location , image });
-    console.log("profile update response",response)
-    return res.status(200).json(response);
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ message: 'Internal Server Error' });
+    const updatedUser = await editUser(userId, { firstName, email, bio, location, image });
+    console.log("output at contro",updatedUser)
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json({ message: 'User updated successfully', user: updatedUser });
+  } catch (error) {
+    console.error('Error updating user:', error);
+    res.status(500).json({ error: 'Server error' });
   }
 };
 

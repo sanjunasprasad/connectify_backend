@@ -1,7 +1,7 @@
 import {Router} from 'express'
 const postRoute = Router();
 import { decodeToken } from '../../middlewares/auth.js';
-import {createPost,loadPost,loadownPost,likePost,likedUsers,commentPost,deletePost,savedPost,getSavedPost,editPost} from "../controllers/postControllers.js"
+import {createPost,loadPost,loadownPost,likePost,likedUsers,commentPost,deletePost,savedPost,getSavedPost,unSavePost,editPost} from "../controllers/postControllers.js"
 
 
 
@@ -15,6 +15,7 @@ postRoute.post('/commentpost/:postid',decodeToken, commentPost);
 postRoute.delete('/deletePost/:postId',decodeToken, deletePost); 
 postRoute.post('/savePost/:postId',decodeToken,savedPost);
 postRoute.get('/getSavedpost/:userId',decodeToken,getSavedPost)
+postRoute.post('/unsavePost',decodeToken,unSavePost)
 postRoute.put('/editPost/:postId',decodeToken,editPost)
 
 
