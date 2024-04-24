@@ -23,11 +23,11 @@ export const generateUserToken = async(existingUser) => {
 export const decodeToken = async(req, res, next) => {
     try {
         let token = null
-        console.log("USER HEADER",req.headers)
+        // console.log("USER HEADER",req.headers)
         const header = req.headers.authorization
         if (header !== undefined ){
              token = header.split(" ")[1]
-            console.log("USER TOKEN in decode:: ",token)
+            // console.log("USER TOKEN in decode:: ",token)
         }
         const Role = req.headers.role;
         console.log("USER ROLE is in decode:",Role)
