@@ -30,7 +30,7 @@ export const decodeToken = async(req, res, next) => {
             // console.log("USER TOKEN in decode:: ",token)
         }
         const Role = req.headers.role;
-        console.log("USER ROLE is in decode:",Role)
+        // console.log("USER ROLE is in decode:",Role)
         if( !token || Role !== 'user'){
             return res.status(403).json({ message: 'Forbidden. Insufficient role.' });
         }

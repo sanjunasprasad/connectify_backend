@@ -4,8 +4,8 @@ export const addMessage = async (req, res) => {
   const { chatId, senderId, text,    } = req.body;
     // Check if an image was uploaded
     const image = req.file ? req.file.path : null;
-    console.log("image is:", image)
-    console.log("message:",text)
+    console.log(" from controller image  is:", image)
+    console.log(" from controller message:",text)
     // console.log("chatid",chatId)
     // console.log("senderid",senderId)
    
@@ -22,6 +22,10 @@ export const addMessage = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+
+
+
 
 export const getMessages = async (req, res) => {
   const { chatId } = req.params;
