@@ -31,6 +31,7 @@ connectDB();
 
 
 
+
 //CORS
 const allowedOrigins = ['https://connectify-omega-mauve.vercel.app']
 // const allowedOrigins = ['http://localhost:3000'];
@@ -44,13 +45,16 @@ app.use(
   })
 );
 
+// const server = app.listen(port, () => {
+//   console.log(`server started at PORT ${port}`)
+// });
 
 //SOCKET
 const server = http.createServer(app)
 const io = new Server( server,{
     cors: {
-      origin: "http://localhost:3000",
-      // origin: "https://connectify-omega-mauve.vercel.app",
+      // origin: "http://localhost:3000",
+      origin: "https://connectify-omega-mauve.vercel.app",
       methods: ["GET" , "POST"],
       credentials : false,
     },
@@ -110,10 +114,8 @@ app.use('/chat',chatRoute);
 app.use('/messages',messageRoute);
 
 
+
 server.listen(port, () => {
-    console.log(`server started at PORT ${port}`)
+  console.log(`server started at PORT ${port}`)
 });
-
-
-
 
