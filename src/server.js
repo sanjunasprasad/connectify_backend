@@ -8,7 +8,7 @@ import friendRoute from './interfaces/routes/friendRoutes.js'
 import chatRoute from './interfaces/routes/ChatRoute.js';
 import messageRoute from './interfaces/routes/MessageRoute.js';
 import dotenv from "dotenv"
-import http from "http"
+// import http from "http"
 import {Server} from "socket.io"
 
 
@@ -32,25 +32,14 @@ connectDB();
 
 
 
-//CORS
-const allowedOrigins = ['https://connectify-omega-mauve.vercel.app']
-// const allowedOrigins = ['http://localhost:3000'];
-app.use(
-  cors({
-    origin: allowedOrigins, 
-    methods: 'GET, PUT, POST, DELETE, PATCH',
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-    credentials: true // Allow cookies to be sent in cross-origin requests
-  })
-);
 
-// const server = app.listen(port, () => {
-//   console.log(`server started at PORT ${port}`)
-// });
+
+const server = app.listen(port, () => {
+  console.log(`server started at PORT ${port}`)
+});
 
 //SOCKET
-const server = http.createServer(app)
+// const server = http.createServer(app)
 const io = new Server( server,{
     cors: {
       // origin: "http://localhost:3000",
@@ -62,6 +51,19 @@ const io = new Server( server,{
     allowEIO3 : true,
   });
 
+
+  //CORS
+const allowedOrigins = ['https://connectify-omega-mauve.vercel.app']
+// const allowedOrigins = ['http://localhost:3000'];
+app.use(
+  cors({
+    origin: allowedOrigins, 
+    methods: 'GET, PUT, POST, DELETE, PATCH',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    credentials: true 
+  })
+);
 
 
 
@@ -115,7 +117,4 @@ app.use('/messages',messageRoute);
 
 
 
-server.listen(port, () => {
-  console.log(`server started at PORT ${port}`)
-});
 
