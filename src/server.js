@@ -8,7 +8,7 @@ import friendRoute from './interfaces/routes/friendRoutes.js'
 import chatRoute from './interfaces/routes/ChatRoute.js';
 import messageRoute from './interfaces/routes/MessageRoute.js';
 import dotenv from "dotenv"
-// import http from "http"
+import http from "http"
 import {Server} from "socket.io"
 
 
@@ -30,31 +30,12 @@ connectDB();
 
 
 
-
-  //CORS
-  const allowedOrigins = ['https://connectify-omega-mauve.vercel.app']
-  // const allowedOrigins = ['http://localhost:3000'];
-  app.use(
-    cors({
-      origin: allowedOrigins, 
-      methods: 'GET, PUT, POST, DELETE, PATCH',
-      preflightContinue: false,
-      optionsSuccessStatus: 204,
-      credentials: true 
-    })
-  );
-
-
-const server = app.listen(port, () => {
-  console.log(`server started at PORT ${port}`)
-});
-
 //SOCKET
-// const server = http.createServer(app)
-const io = new Server( server,{
+const httpserver = http.createServer(app)
+const io = new Server( httpserver,{
     cors: {
-      // origin: "http://localhost:3000",
-      origin: "https://connectify-omega-mauve.vercel.app",
+      origin: "http://localhost:3000",
+      // origin: "https://connectify-omega-mauve.vercel.app",
       methods: ["GET" , "POST"],
       credentials : false,
     },
@@ -63,11 +44,22 @@ const io = new Server( server,{
   });
 
 
+   //CORS
+  //  const allowedOrigins = ['https://connectify-omega-mauve.vercel.app']
+   const allowedOrigins = ['http://localhost:3000'];
+   app.use(
+     cors({
+       origin: allowedOrigins, 
+       methods: 'GET, PUT, POST, DELETE, PATCH',
+       preflightContinue: false,
+       optionsSuccessStatus: 204,
+       credentials: true 
+     })
+   );
 
 
 
-
-
+ 
 
 
 //SOCKET
@@ -106,7 +98,6 @@ io.on("connection", (socket) => {
 
 
 
-
 //routes
 app.use('/', userRoute);
 app.use('/admin', adminRoute);
@@ -114,6 +105,17 @@ app.use('/post', postRoute);
 app.use('/friend',friendRoute);
 app.use('/chat',chatRoute);
 app.use('/messages',messageRoute);
+
+
+
+
+httpserver.listen(port, () => {
+  console.log(`server started at PORT ${port}`)
+});
+
+
+
+
 
 
 
