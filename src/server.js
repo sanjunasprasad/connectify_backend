@@ -31,7 +31,18 @@ connectDB();
 
 
 
-
+  //CORS
+  const allowedOrigins = ['https://connectify-omega-mauve.vercel.app']
+  // const allowedOrigins = ['http://localhost:3000'];
+  app.use(
+    cors({
+      origin: allowedOrigins, 
+      methods: 'GET, PUT, POST, DELETE, PATCH',
+      preflightContinue: false,
+      optionsSuccessStatus: 204,
+      credentials: true 
+    })
+  );
 
 
 const server = app.listen(port, () => {
@@ -52,18 +63,7 @@ const io = new Server( server,{
   });
 
 
-  //CORS
-const allowedOrigins = ['https://connectify-omega-mauve.vercel.app']
-// const allowedOrigins = ['http://localhost:3000'];
-app.use(
-  cors({
-    origin: allowedOrigins, 
-    methods: 'GET, PUT, POST, DELETE, PATCH',
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-    credentials: true 
-  })
-);
+
 
 
 
