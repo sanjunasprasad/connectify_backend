@@ -31,8 +31,9 @@ connectDB();
 
 
 
-
+//CORS
 const allowedOrigins = ['https://connectify-omega-mauve.vercel.app']
+// const allowedOrigins = ['http://localhost:3000'];
 app.use(
   cors({
     origin: allowedOrigins, 
@@ -48,6 +49,7 @@ app.use(
 const server = http.createServer(app)
 const io = new Server( server,{
     cors: {
+      // origin: "http://localhost:3000",
       origin: "https://connectify-omega-mauve.vercel.app",
       methods: ["GET" , "POST"],
       credentials : false,
