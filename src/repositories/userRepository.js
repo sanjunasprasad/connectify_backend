@@ -67,10 +67,8 @@ export const getAllUsers = async () => {
 
 // Delete user
 export const deleteOneUser = async (id) => {
-  // console.log("userid in delete one user *******",id)
-  // console.log("type of delete one user",typeof(id))
   const response = await User.findByIdAndDelete(id);
-  console.log("DELETE USER:",response)
+  // console.log("DELETE USER:",response)
   if (response) {
     return response;
   } else {

@@ -164,9 +164,9 @@ export const fetchProfile = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    console.log("user id",userId)
+    // console.log("user id",userId)
     const { userResponse, postDeletionResponse,} = await deleteUserAndPosts(userId);
-    console.log("deleted items##########",userResponse,postDeletionResponse,)
+    // console.log("deleted items##########",userResponse,postDeletionResponse,)
     
     res.status(200).json({ userResponse, postDeletionResponse });
   } catch (err) {

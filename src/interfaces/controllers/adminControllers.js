@@ -4,6 +4,7 @@ import {blockUsers} from '../../usecases/AdminUseCases/blockUsers.js'
 import { deleteUser } from '../../usecases/AdminUseCases/deleteUser.js';
 import {getReporteduser} from '../../usecases/AdminUseCases/getReportUser.js'
 import {deactivate} from '../../usecases/AdminUseCases/deactivateUser.js'
+import {getFormattedPosts} from "../../usecases/AdminUseCases/getAllPosts.js"
 
 export const adminLogin = async(req, res) => {
     try{
@@ -87,5 +88,17 @@ export const deactivateUser = async(req,res) => {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
+  }
+
+
+  export const getPosts = async(req,res) =>{
+    try {
+      const formattedPosts = await getFormattedPosts();
+      // console.log("response in contro",formattedPosts)
+      res.json(formattedPosts);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server Error' });
+    }
   }
   

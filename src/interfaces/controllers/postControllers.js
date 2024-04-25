@@ -227,7 +227,7 @@ export const getSavedPost = async(req, res) => {
       return postWithUserInfo;
     });
     const populatedSavedPosts = await Promise.all(savedPosts);
-    console.log("Saved postsssss", populatedSavedPosts);
+    // console.log("Saved postsssss", populatedSavedPosts);
     res.status(200).json(populatedSavedPosts);
   } catch (error) {
     console.error(error);

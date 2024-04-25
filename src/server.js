@@ -12,12 +12,6 @@ import http from "http"
 import {Server} from "socket.io"
 
 
-
-
-
-
-
-
 const port =  8000
 const app = express();
 dotenv.config()
@@ -34,8 +28,8 @@ connectDB();
 const httpserver = http.createServer(app)
 const io = new Server( httpserver,{
     cors: {
-      origin: "http://localhost:3000",
-      // origin: "https://connectify-omega-mauve.vercel.app",
+      // origin: "http://localhost:3000",
+      origin: "https://connectify-omega-mauve.vercel.app",
       methods: ["GET" , "POST"],
       credentials : false,
     },
@@ -45,8 +39,8 @@ const io = new Server( httpserver,{
 
 
    //CORS
-  //  const allowedOrigins = ['https://connectify-omega-mauve.vercel.app']
-   const allowedOrigins = ['http://localhost:3000'];
+   const allowedOrigins = ['https://connectify-omega-mauve.vercel.app']
+  //  const allowedOrigins = ['http://localhost:3000'];
    app.use(
      cors({
        origin: allowedOrigins, 

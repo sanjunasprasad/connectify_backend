@@ -1,8 +1,10 @@
 import User from "../entities/userModel.js";
+import Post from "../entities/postModel.js";
 
 export const getAllUsers = async () => {
   try {
-    const userData = await User.find().lean();
+    const userData = await User.find().lean()
+    console.log("userdata111111",userData)
     return userData;
   } catch (error) {
     console.error("An error occurred while fetching all users:", error);
@@ -56,7 +58,7 @@ export const getReportProfile = async () => {
   }
 };
 
-
+//deactivate status
 export const updateStatus = async(id,status)=>{
   try {
     const user = await User.findOneAndUpdate(
@@ -72,4 +74,17 @@ export const updateStatus = async(id,status)=>{
     console.error("Error updating user status:", error);
     throw error; 
   }
+}
+
+
+//get all posts
+ export const getAll = async()=>{
+  try {
+  const response =await Post.find().populate('user').populate('likes.user').populate('comments.user');
+  // console.log("repo response",response)
+    return response
+  } catch (error) {
+    throw new Error('Error while fetching posts');
+  }
+
 }

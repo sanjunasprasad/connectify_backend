@@ -10,7 +10,7 @@ export const generateUserToken = async(existingUser) => {
         }
        
         const token = Jwt.sign(payload, process.env.JWT_KEY, { expiresIn: '3h' });
-        console.log('userToken:', JSON.stringify(token));
+        // console.log('userToken:', JSON.stringify(token));
         // console.log("type of user token",typeof(token))
         return token;
     } catch (error) {
@@ -68,14 +68,14 @@ export const decodeAdminToken = async(req, res, next) => {
     try {
         
         const token = req.header('Authorization').replace('Bearer ', '');
-        console.log("ADMIN token  :",token)
+        // console.log("ADMIN token  :",token)
         Jwt.verify(token, process.env.JWT_ADMIN_KEY, (err, decodedToken) => {
             if (err) {
                 return res.status(401).json({ message: 'Unauthorized Access' });
             }
             req.token = decodedToken;
             const Role = req.headers.role;
-            console.log("ROLE  is",Role)
+            // console.log("ROLE  is",Role)
             if(Role !== 'admin'){
                 return res.status(403).json({ message: 'Forbidden, Insufficient role.' });
             }
