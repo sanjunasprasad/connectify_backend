@@ -176,3 +176,33 @@ export const deleteUser = async (req, res) => {
 };
 
 
+
+export const searchUser = async(req,res) =>{
+  try {
+    const term = req.query.term;
+    // console.log("term",term)
+    const users = await User.find({
+      $or: [
+        { firstName: { $regex: term, $options: 'i' } },
+        { lastName: { $regex: term, $options: 'i' } },
+      ],
+    }).select('image firstName lastName email _id');
+
+    if (users.length === 0) {
+      return res.status(404).json({ message: 'No results found' });
+    }
+    const formattedUsers = users.map(user => ({
+      image: user.image,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      userId: user._id
+    }));
+    // console.log('Found users:', formattedUsers);
+    res.json(formattedUsers);
+  } catch (error) {
+    console.error('Error searching user:', error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+}
+
