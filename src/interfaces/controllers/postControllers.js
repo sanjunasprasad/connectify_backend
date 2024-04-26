@@ -274,35 +274,4 @@ export const editPost = async(req,res) =>{
   }
 }
 
-export const deleteComment =async(req,res) =>{
-  const { postId, commentId } = req.params;
-  const {userId} = req.body
-  console.log("userid",userId)
-  console.log("postid",postId)
-  console.log("commentId",commentId)
-  try {
-    const post = await Post.findById(postId);
-
-    if (!post) {
-      return res.status(404).json({ error: 'Post not found' });
-    }
-    const comment = post.comments.find(comment => comment._id.toString() === commentId);
-
-    if (!comment) {
-      return res.status(404).json({ error: 'Comment not found' });
-    }
-    if (comment.user.toString() !== userId && post.user.toString() !== userId) {
-      return res.status(403).json({ error: 'Unauthorized to delete this comment' });
-    }
-    post.comments = post.comments.filter(comment => comment._id.toString() !== commentId);
-
-    await post.save();
-
-    res.json({ message: 'Comment deleted successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error' });
-  }
-
-}
 
