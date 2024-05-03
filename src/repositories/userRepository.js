@@ -18,7 +18,7 @@ export const saveUser = async (firstName, lastName, phoneNo, email, password, is
 export const checkUser = async (email) => {
   try {
     const existingUserData = await User.findOne({ email: email });
-    // console.log("from repo existingUserData:",existingUserData)
+    console.log("from repo existingUserData:",existingUserData)
     return existingUserData;
   } catch (error) {
     console.error("An error occurred while checking user:", error);

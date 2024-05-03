@@ -63,9 +63,9 @@ export const userLogin = async (req, res) => {
   try {
    
     const { email, password } = req.body;
-    // console.log("email and password from frontend controller",email,password)
+    console.log("email and password from frontend controller",email,password)
     const response = await loginUser(email,password);
-    // console.log("from login controller response as token",response)
+    console.log("from login controller response as token",response)
     if (!response) {
       return res.status(401).end(); 
     } else if(response.notFound){
