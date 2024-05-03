@@ -18,16 +18,29 @@ export const loginUser = async (email, password) => {
        else if(existingUser.status){
         return { status: true, message: 'User account is deactivated.' };
        }
-      else if (existingUser) 
-      {
-        const passwordMatch = await bcrypt.compare(password, existingUser.password);
-        if (passwordMatch) 
-        {
-          const token = generateUserToken(existingUser);
-          // console.log(" generated token in login route",token)
-          return token;
+      // else if (existingUser) 
+      // {
+      //   const passwordMatch = await bcrypt.compare(password, existingUser.password);
+      //   if (passwordMatch) 
+      //   {
+      //     const token = generateUserToken(existingUser);
+      //     // console.log(" generated token in login route",token)
+      //     return token;
+      //   }
+      // }
+      else if (existingUser) {
+        if (typeof existingUser.password === 'string') {
+          const passwordMatch = await bcrypt.compare(password, existingUser.password);
+          if (passwordMatch) {
+            const token = generateUserToken(existingUser);
+            return token;
+          }
+        } else {
+          console.error('User password is not a string:', existingUser.password);
+          return { error: 'User password is not a string' };
         }
       }
+      
       return null; 
     } catch (err) {
       console.error("Error during user login:", err);
