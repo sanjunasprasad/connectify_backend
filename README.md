@@ -5,7 +5,7 @@ Connectify is a feature-rich social media application built using the MERN (Mong
 # Features
 ### User Side
 - Post Creation: Users can create posts with videos and images.
-- Post Interactions: Like, dislike, save, delete, and edit posts.
+- Post Interactions: Like, dislike, comment,save, delete, and edit posts.
 - Profile Management: Custom profiles with the ability to follow, unfollow, and report other profiles. Users can edit and delete their own profiles.
 - Real-Time Chat: Instant messaging with real-time updates using Socket.io. Supports sending emojis and images.
 - Video Calls: Video calling with friends using ZegoCloud.
