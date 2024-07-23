@@ -6,10 +6,10 @@ import { adminLogin ,loadUsers, userBlock,deleteuser,listReportuser,deactivateUs
 
 adminRoute.post('/adminLogin', adminLogin);
 adminRoute.get('/loadUsers',decodeAdminToken, loadUsers);
-adminRoute.patch('/blockuser/:id', decodeAdminToken,userBlock);
+adminRoute.post('/blockuser/:id', decodeAdminToken,userBlock);
 adminRoute.delete('/adminDeleteUser/:id', decodeAdminToken,deleteuser);
 adminRoute.get('/listReportuser',decodeAdminToken,listReportuser)
-adminRoute.patch('/deactivateUser/:id',decodeAdminToken,deactivateUser)
+adminRoute.post('/deactivateUser/:id',decodeAdminToken,deactivateUser)
 adminRoute.get('/getPosts',decodeAdminToken,getPosts)
 
 

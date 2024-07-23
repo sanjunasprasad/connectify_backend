@@ -164,3 +164,38 @@ export const reportProfile = async(req,res) =>{
   }
 
 }
+
+
+
+
+export const fetchFollowers = async (req, res) => {
+
+  const { userId } = req.params;
+  try {
+    const user = await User.findById(userId).populate('followers', 'firstName lastName image');
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json({ followers: user.followers });
+  } catch (error) {
+    console.error('Error occurred while fetching followers:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+
+
+// Function to fetch followings
+export const fetchFollowings = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findById(userId).populate('following', 'firstName lastName image');
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json({ following: user.following });
+  } catch (error) {
+    console.error('Error occurred while fetching followings:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};

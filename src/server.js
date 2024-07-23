@@ -39,15 +39,13 @@ const io = new Server( httpserver,{
 
 
    //CORS
-   const allowedOrigins = ['https://connectify-omega-mauve.vercel.app']
-  //  const allowedOrigins = ['http://localhost:3000'];
    app.use(
      cors({
-       origin: allowedOrigins, 
+       origin: ['https://connectify-omega-mauve.vercel.app','http://localhost:3000'] ,
        methods: 'GET, PUT, POST, DELETE, PATCH',
        preflightContinue: false,
        optionsSuccessStatus: 204,
-       credentials: true 
+       credentials: false
      })
    );
 

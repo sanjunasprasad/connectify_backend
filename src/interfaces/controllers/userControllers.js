@@ -63,9 +63,8 @@ export const userLogin = async (req, res) => {
   try {
    
     const { email, password } = req.body;
-    console.log("email and password from frontend controller",email,password)
     const response = await loginUser(email,password);
-    console.log("from login controller response as token",response)
+    // console.log("from login controller response as token",response)
     if (!response) {
       return res.status(401).end(); 
     } else if(response.notFound){
@@ -89,7 +88,7 @@ export const userLogin = async (req, res) => {
 export const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
-     console.log("email  from frontend:",email)
+     console.log("email  from frontend for restpassword:",email)
      userMail=req.body.email
     savedOTP = generateOTP(); 
     await sendOTPByEmail(email, savedOTP);

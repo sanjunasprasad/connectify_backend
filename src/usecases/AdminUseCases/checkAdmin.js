@@ -3,6 +3,7 @@ import { generateAdminToken } from "../../middlewares/auth.js";
 const adminCredential = {
   email: "admin@gmail.com",
   password: "admin",
+  role : "admin"
 };
 
 
@@ -12,10 +13,12 @@ export const checkLogin = async (email, password) => {
       adminCredential.email === email &&
       adminCredential.password === password
     ) {
-      const adminToken = await generateAdminToken(email);
+
+      const { role } = adminCredential; 
+      const adminToken = await generateAdminToken(email ,role);
       const adminData = {
         email,
-        password,
+        role
       };
       return { adminData, adminToken };
     } else {

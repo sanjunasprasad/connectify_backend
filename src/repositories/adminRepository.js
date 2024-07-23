@@ -4,7 +4,6 @@ import Post from "../entities/postModel.js";
 export const getAllUsers = async () => {
   try {
     const userData = await User.find().lean()
-    console.log("userdata111111",userData)
     return userData;
   } catch (error) {
     console.error("An error occurred while fetching all users:", error);
@@ -24,7 +23,7 @@ export const updateUserstatus = async (id, isBlocked) => {
     if (!updatedUser) {
       throw new Error("User not found");
     }
-    // console.log("Updated user from repo:", updatedUser);
+    console.log("Updated user BLOCK from repo:", updatedUser);
     return updatedUser;
   } catch (error) {
     console.error("Failed to update user status:", error);

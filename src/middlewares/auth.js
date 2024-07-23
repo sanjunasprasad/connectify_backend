@@ -1,17 +1,16 @@
 import Jwt from 'jsonwebtoken'
 
 
-export const generateUserToken = async(existingUser) => {
+export const generateUserToken = async(existingUser ,role) => {
     try {
-        const {_id } = existingUser;
-        // console.log("id on auth",_id)
+        const {_id  } = existingUser;
         const payload = {
             userId: _id,
+            role: role
         }
        
         const token = Jwt.sign(payload, process.env.JWT_KEY, { expiresIn: '3h' });
-        // console.log('userToken:', JSON.stringify(token));
-        // console.log("type of user token",typeof(token))
+        console.log("user token created during login:", token)
         return token;
     } catch (error) {
         console.error("Error generating user token:", error);
@@ -20,42 +19,46 @@ export const generateUserToken = async(existingUser) => {
 }
 
 
-export const decodeToken = async(req, res, next) => {
+
+export const decodeToken = async (req, res, next) => {
     try {
-        let token = null
-        // console.log("USER HEADER",req.headers)
-        const header = req.headers.authorization
-        if (header !== undefined ){
-             token = header.split(" ")[1]
-            // console.log("USER TOKEN in decode:: ",token)
+        const header = req.headers.authorization;
+        if (!header) {
+            return res.status(401).json({ message: 'Authorization header missing' });
         }
-        const Role = req.headers.role;
-        // console.log("USER ROLE is in decode:",Role)
-        if( !token || Role !== 'user'){
-            return res.status(403).json({ message: 'Forbidden. Insufficient role.' });
+
+        const token = header.split(" ")[1];
+        if (!token) {
+            return res.status(401).json({ message: 'Token missing' });
         }
-        
+
         Jwt.verify(token, process.env.JWT_KEY, (err, decodedToken) => {
             if (err) {
                 return res.status(401).json({ message: 'Unauthorized Access' });
             }
             req.token = decodedToken;
-            // console.log("decode tokn111 USER:",req.token)
+
+            if (decodedToken.role !== 'user') {
+                return res.status(403).json({ message: 'Forbidden. Insufficient role.' });
+            }
+               console.log("+++++decode tokn111 USER:",req.token)
             next();
         });
-
     } catch (error) {
-        console.error("Error decoding token 1111USER:", error);
-        return res.status(500).json({ message: 'Internal Server Error1111USER' });
+        console.error("Error decoding token:", error);
+        return res.status(500).json({ message: 'Internal Server Error' });
     }
-}
+};
 
 
-export const generateAdminToken = async (email) => {
+export const generateAdminToken = async (email ,role) => {
     try {
-        const token = Jwt.sign(email, process.env.JWT_ADMIN_KEY);
-        // console.log('adminToken:', JSON.stringify(token));
-        // console.log("type of admin token",typeof(token))
+        const payload = {
+            email: email, 
+            role : role
+        };
+        const token = Jwt.sign(payload, process.env.JWT_ADMIN_KEY);
+        console.log('adminToken created during login:', JSON.stringify(token));
         return token;
     } catch (error) {
         console.error("Error generating admin token:", error);
@@ -64,25 +67,37 @@ export const generateAdminToken = async (email) => {
 }
 
 
-export const decodeAdminToken = async(req, res, next) => {
-    try {
-        
-        const token = req.header('Authorization').replace('Bearer ', '');
-        // console.log("ADMIN token  :",token)
-        Jwt.verify(token, process.env.JWT_ADMIN_KEY, (err, decodedToken) => {
-            if (err) {
-                return res.status(401).json({ message: 'Unauthorized Access' });
-            }
-            req.token = decodedToken;
-            const Role = req.headers.role;
-            // console.log("ROLE  is",Role)
-            if(Role !== 'admin'){
-                return res.status(403).json({ message: 'Forbidden, Insufficient role.' });
-            }
-            next();
-        });
-    } catch (error) {
-        console.error("Error decoding token:", error);
-        return res.status(500).json({ message: 'Internal Server Error' });
+
+
+
+
+export const decodeAdminToken = async (req, res, next) => {
+  try {
+    const authHeader = req.header('Authorization');
+    if (!authHeader) {
+      return res.status(401).json({ message: 'Authorization header missing' });
     }
-}
+
+    const token = authHeader.replace('Bearer ', '');
+    console.log("ADMIN token decoded via middleware:", token);
+
+    Jwt.verify(token, process.env.JWT_ADMIN_KEY, (err, decodedToken) => {
+      if (err) {
+        return res.status(401).json({ message: 'Unauthorized Access' });
+      }
+
+      req.token = decodedToken;
+      const role = decodedToken.role;
+
+      if (role !== 'admin') {
+        return res.status(403).json({ message: 'Forbidden, Insufficient role.' });
+      }
+
+      next();
+    });
+  } catch (error) {
+    console.error("Error decoding token:", error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+

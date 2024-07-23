@@ -1,12 +1,13 @@
 import {Router} from 'express'
 const postRoute = Router();
 import { decodeToken } from '../../middlewares/auth.js';
-import {createPost,loadPost,loadownPost,likePost,likedUsers,commentPost,deletePost,savedPost,getSavedPost,unSavePost,editPost} from "../controllers/postControllers.js"
+import {createPost,loadAllPost,loadPost,loadownPost,likePost,likedUsers,commentPost,deletePost,savedPost,getSavedPost,unSavePost,editPost} from "../controllers/postControllers.js"
 
 
 
 
 postRoute.post('/createPost',decodeToken, createPost);
+postRoute.get('/loadAllPost',decodeToken,loadAllPost)
 postRoute.get('/loadownPost',decodeToken,loadownPost); //own post load
 postRoute.get('/loadPost/:userId', decodeToken,loadPost);//restricted post load
 postRoute.put('/likepost/:postid',decodeToken,likePost) // post like,unlike

@@ -6,22 +6,37 @@ import User from "../../entities/userModel.js";
 export const createPost = async (req, res) => {
   try {
     const { caption, userId ,postUrl} = req.body;
-    console.log("User Data:", userId);
-    console.log("caption:", caption);
-    console.log("post url :", postUrl);
+    // console.log("User Data:", userId);
+    // console.log("caption:", caption);
+    // console.log("post url :", postUrl);
     const newPost = new Post({
       caption:caption,
       file: postUrl,
       user: userId,
     });
     const savedPost = await newPost.save();
-    console.log("after saving:",savedPost)
+    // console.log("after saving:",savedPost)
     return res.status(201).json(savedPost);
   } catch (error) {
     console.error("Error creating post:", error);
     res.status(500).json({ message: "Internal server error 222" });
   }
 };
+
+
+//load allpost
+export const loadAllPost = async (req,res) =>{
+  try {
+    const posts = await Post.find({})
+      .populate('user', 'firstName image') 
+      .populate('comments.user', 'firstName image');
+    // console.log("List of posts:", posts);
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
 
 
 //load our post
@@ -32,7 +47,6 @@ export const loadownPost = async (req, res) => {
     const posts = await Post.find({user: userId})
     .populate('user', 'firstName image') 
     .populate('comments.user', 'firstName image')
-    console.log("list ofposts:",posts)
     res.status(200).json(posts);
   } catch (error) {
     console.error("Error fetching posts:", error);
@@ -63,8 +77,8 @@ export const loadPost = async (req, res) => {
         path: 'user',
         select: 'firstName  lastName image', 
       },
-    });
-    // console.log("selected posts:",posts)
+    })
+    .sort({ createdAt: -1 });
     res.json(posts);
   } catch (error) {
     console.error("Error fetching posts:", error);
@@ -76,12 +90,9 @@ export const loadPost = async (req, res) => {
 //post like,unlike
 export const likePost = async (req, res) => {
   const id = req.params.postid;
-  // console.log("postid",id)
   const { userId } = req.body;
-  // console.log("user id",userId)
   try {
     const post = await Post.findById(id);
-    // console.log("1111111post",userId)
     if (!post) {
       return res.status(404).json({ error: 'Post not found' });
     }
@@ -89,11 +100,9 @@ export const likePost = async (req, res) => {
     const isLiked = post.likes.some(like => like.user.toString() === userId);
     if (isLiked) {
      const response = await Post.findByIdAndUpdate(id, { $pull: { likes: { user: userId } } });
-    //  console.log("dddddddislike",response)
       res.status(200).json({ message: 'Post disliked' });
     } else {
       const response = await Post.findByIdAndUpdate(id, { $push: { likes: { user: userId } } });
-      // console.log("lllllllllike",response)
       res.status(200).json({ message: 'Post liked' });
     }
   } catch (error) {
@@ -199,12 +208,11 @@ export const savedPost = async (req, res) => {
 export const getSavedPost = async(req, res) => {
   try {
     const userId = req.params.userId;
-    console.log("user id is", userId);
     const user = await User.findById(userId).populate('savedPosts');
     const savedPosts = user.savedPosts.map(async (post) => {
       const postWithUserInfo = { ...post._doc };
       const postUser = await User.findById(post.user);
-      console.log('owner of Post user:', postUser);
+      // console.log('owner of Post user:', postUser);
       postWithUserInfo.username = postUser.firstName;
       postWithUserInfo.userPhoto = postUser.image; 
    

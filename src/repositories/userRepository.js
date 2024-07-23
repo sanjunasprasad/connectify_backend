@@ -18,8 +18,9 @@ export const saveUser = async (firstName, lastName, phoneNo, email, password, is
 export const checkUser = async (email) => {
   try {
     const existingUserData = await User.findOne({ email: email });
-    console.log("from repo existingUserData:",existingUserData)
-    return existingUserData;
+    const role = existingUserData.isAdmin ? 'admin' : 'user';
+    // console.log("from repo existingUserData role:",role)
+    return { existingUser: existingUserData, role };
   } catch (error) {
     console.error("An error occurred while checking user:", error);
     return { message: "An error occurred while checking user" };
