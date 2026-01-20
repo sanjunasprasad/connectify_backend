@@ -64,12 +64,10 @@ export const getAllUsers = async () => {
   };
   
 
-
-
-// Delete user
+// Delete one  user
 export const deleteOneUser = async (id) => {
   const response = await User.findByIdAndDelete(id);
-  // console.log("DELETE USER:",response)
+  console.log("DELETE USER:",response)
   if (response) {
     return response;
   } else {
@@ -77,11 +75,24 @@ export const deleteOneUser = async (id) => {
   }
 };
 
-// Delete posts associated with the user
+// Delete posts, likes,comments associated with the user
 export const deletePostsByUser = async (userId) => {
   try {
+    // Remove comments by the user from all posts
+    await Post.updateMany(
+      { "comments.user": userId },
+      { $pull: { comments: { user: userId } } }
+    );
+
+    // Remove likes by the user from all posts
+    await Post.updateMany(
+      { "likes.user": userId },
+      { $pull: { likes: { user: userId } } }
+    );
+
+    // Delete all posts by the user
     const response = await Post.deleteMany({ user: userId });
-    console.log("DELETE USER POST:", response);
+    // console.log("DELETE USER POST:", response);
     return response;
   } catch (error) {
     console.error("An error occurred while deleting posts by user:", error);
@@ -91,3 +102,69 @@ export const deletePostsByUser = async (userId) => {
 
 
 
+export const updateFollowersAndFollowing = async (userId) => {
+  try {
+    // Remove user from followers' list
+    await User.updateMany(
+      { following: userId },
+      { $pull: { following: userId } }
+    );
+
+    // Remove user from following's list
+    await User.updateMany(
+      { followers: userId },
+      { $pull: { followers: userId } }
+    );
+
+    return { message: "Followers and following lists updated successfully" };
+  } catch (error) {
+    console.error("An error occurred while updating followers and following lists:", error);
+    return { message: "An error occurred while updating followers and following lists" };
+  }
+};
+
+export const deleteReports = async (userId) => {
+  try {
+    // Remove reports made by this user
+    const reportsMadeResponse = await deleteReportsMadeByUser(userId);
+
+    // Remove reports against this user
+    const reportsAgainstResponse = await deleteReportsAgainstUser(userId);
+
+    return { reportsMadeResponse, reportsAgainstResponse };
+  } catch (error) {
+    console.error("An error occurred while deleting reports:", error);
+    return { message: "An error occurred while deleting reports" };
+  }
+};
+
+export const deleteReportsAgainstUser = async (userId) => {
+  try {
+    // Remove reports against this user
+    await User.updateMany(
+      { _id: userId },
+      { $set: { reports: [] } }
+    );
+
+    return { message: "Reports against the user removed successfully" };
+  } catch (error) {
+    console.error("An error occurred while deleting reports against the user:", error);
+    return { message: "An error occurred while deleting reports against the user" };
+  }
+};
+
+
+export const deleteReportsMadeByUser = async (userId) => {
+  try {
+    // Remove reports made by this user from other users
+    await User.updateMany(
+      { "reports.reportedBy": userId },
+      { $pull: { reports: { reportedBy: userId } } }
+    );
+
+    return { message: "Reports made by the user removed successfully" };
+  } catch (error) {
+    console.error("An error occurred while deleting reports made by the user:", error);
+    return { message: "An error occurred while deleting reports made by the user" };
+  }
+};

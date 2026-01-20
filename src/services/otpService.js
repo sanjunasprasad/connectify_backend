@@ -13,7 +13,7 @@ export const sendOTPByEmail = async (email, otp) => {
       service: "gmail",
             auth: {
                 user: "sanjunasprasad@gmail.com",
-                pass: "hgbexrtifxmyakpd",
+                pass: "gbwezrgnzvscgcki",
             },
     });
 

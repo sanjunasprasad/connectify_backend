@@ -12,7 +12,7 @@ import http from "http"
 import {Server} from "socket.io"
 
 
-const port =  8000
+
 const app = express();
 dotenv.config()
 app.use(express.json())
@@ -28,8 +28,8 @@ connectDB();
 const httpserver = http.createServer(app)
 const io = new Server( httpserver,{
     cors: {
-      // origin: "http://localhost:3000",
-      origin: "https://connectify-omega-mauve.vercel.app",
+      origin: "http://localhost:3000",
+      // origin: "https://connectify-omega-mauve.vercel.app",
       methods: ["GET" , "POST"],
       credentials : false,
     },
@@ -41,7 +41,8 @@ const io = new Server( httpserver,{
    //CORS
    app.use(
      cors({
-       origin: ['https://connectify-omega-mauve.vercel.app','http://localhost:3000'] ,
+       origin: 'http://localhost:3000',
+      //  origin: ['https://connectify-omega-mauve.vercel.app'] ,
        methods: 'GET, PUT, POST, DELETE, PATCH',
        preflightContinue: false,
        optionsSuccessStatus: 204,
@@ -100,10 +101,11 @@ app.use('/messages',messageRoute);
 
 
 
-
+const port =  8000
 httpserver.listen(port, () => {
   console.log(`server started at PORT ${port}`)
 });
+
 
 
 

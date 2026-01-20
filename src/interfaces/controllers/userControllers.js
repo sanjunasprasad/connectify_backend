@@ -160,19 +160,23 @@ export const fetchProfile = async (req, res) => {
   }
 }
 
+
+
 export const deleteUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    // console.log("user id",userId)
-    const { userResponse, postDeletionResponse,} = await deleteUserAndPosts(userId);
-    // console.log("deleted items##########",userResponse,postDeletionResponse,)
+    console.log("user id", userId);
     
-    res.status(200).json({ userResponse, postDeletionResponse });
+    const { userResponse, postDeletionResponse, followersAndFollowingResponse, reportsDeletionResponse  } = await deleteUserAndPosts(userId);
+    // console.log("deleted items##########", userResponse, postDeletionResponse, followersAndFollowingResponse, reportsDeletionResponse );
+    
+    res.status(200).json({ userResponse, postDeletionResponse, followersAndFollowingResponse, reportsDeletionResponse  });
   } catch (err) {
     console.log(err);
-    res.json({ message: "Couldn't delete the user and posts" });
+    res.status(500).json({ message: "Couldn't delete the user and related data" });
   }
 };
+
 
 
 

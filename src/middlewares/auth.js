@@ -10,7 +10,7 @@ export const generateUserToken = async(existingUser ,role) => {
         }
        
         const token = Jwt.sign(payload, process.env.JWT_KEY, { expiresIn: '3h' });
-        console.log("user token created during login:", token)
+        // console.log("user token created during login:", token)
         return token;
     } catch (error) {
         console.error("Error generating user token:", error);
@@ -41,7 +41,7 @@ export const decodeToken = async (req, res, next) => {
             if (decodedToken.role !== 'user') {
                 return res.status(403).json({ message: 'Forbidden. Insufficient role.' });
             }
-               console.log("+++++decode tokn111 USER:",req.token)
+            //    console.log("+++++decode tokn111 USER:",req.token)
             next();
         });
     } catch (error) {
@@ -58,7 +58,7 @@ export const generateAdminToken = async (email ,role) => {
             role : role
         };
         const token = Jwt.sign(payload, process.env.JWT_ADMIN_KEY);
-        console.log('adminToken created during login:', JSON.stringify(token));
+        // console.log('adminToken created during login:', JSON.stringify(token));
         return token;
     } catch (error) {
         console.error("Error generating admin token:", error);
@@ -79,7 +79,7 @@ export const decodeAdminToken = async (req, res, next) => {
     }
 
     const token = authHeader.replace('Bearer ', '');
-    console.log("ADMIN token decoded via middleware:", token);
+    // console.log("ADMIN token decoded via middleware:", token);
 
     Jwt.verify(token, process.env.JWT_ADMIN_KEY, (err, decodedToken) => {
       if (err) {
