@@ -6,16 +6,16 @@ import User from "../../entities/userModel.js";
 export const createPost = async (req, res) => {
   try {
     const { caption, userId ,postUrl} = req.body;
-    // console.log("User Data:", userId);
-    // console.log("caption:", caption);
-    // console.log("post url :", postUrl);
+    console.log("User Data:", userId);
+    console.log("caption:", caption);
+    console.log("post url :", postUrl);
     const newPost = new Post({
       caption:caption,
       file: postUrl,
       user: userId,
     });
     const savedPost = await newPost.save();
-    // console.log("after saving:",savedPost)
+    console.log("after saving:",savedPost)
     return res.status(201).json(savedPost);
   } catch (error) {
     console.error("Error creating post:", error);
