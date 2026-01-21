@@ -12,13 +12,13 @@ export const sendOTPByEmail = async (email, otp) => {
       // Configure Nodemailer to use your email service provider
       service: "gmail",
             auth: {
-                user: "sanjunasprasad@gmail.com",
-                pass: "gbwezrgnzvscgcki",
+                user: "process.env.EMAIL_USER",
+                pass: "process.env.EMAIL_PASS",
             },
     });
 
     const mailOptions = {
-      from: 'connectify@gmail.com',
+      from: 'process.env.EMAIL_USER',
       to: email,
       subject: 'Verification OTP',
       text: `Your OTP for email verification is: ${otp}`
