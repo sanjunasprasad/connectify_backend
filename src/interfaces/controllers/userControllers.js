@@ -3,7 +3,7 @@ import { findOneUser } from "../../repositories/userRepository.js";
 import {loginUser} from '../../usecases/UserUseCases/loginUser.js';
 import { editUser } from '../../usecases/UserUseCases/editUser.js';
 import { deleteUserAndPosts} from '../../usecases/UserUseCases/deleteUser.js';
-import { generateOTP, sendOTPByEmail } from '../../services/otpService.js';
+import { generateOTP, sendOTPByEmail, sendOTPByBravo } from '../../services/otpService.js';
 import User from  "../../entities/userModel.js"
 import bcrypt from 'bcrypt';
 
@@ -17,7 +17,8 @@ export const userRegister = async (req, res) => {
        userMail=req.body.email
       savedOTP = generateOTP(); 
       console.log("OTP GENREATEED:",savedOTP)
-      await sendOTPByEmail(email, savedOTP);
+      // await sendOTPByEmail(email, savedOTP);
+      await sendOTPByBravo(email, savedOTP);
       await registerUser(firstName, lastName, phoneNo, email, password,is_blocked);
       return res.status(200).end();
     } catch (err) {
@@ -50,7 +51,8 @@ export const userRegister = async (req, res) => {
     try {
       console.log("resend otp calleddddddddddd");
        savedOTP = generateOTP(); 
-      await sendOTPByEmail(userMail, savedOTP);
+      // await sendOTPByEmail(userMail, savedOTP);
+      await sendOTPByBravo(email, savedOTP);
       console.log("New OTP generated iam resend controller", savedOTP);
       res.status(200).json({ success: true, message: "OTP successfully resent to your email." });
     } catch (err) {
@@ -92,7 +94,8 @@ export const forgotPassword = async (req, res) => {
      console.log("email  from frontend for restpassword:",email)
      userMail=req.body.email
     savedOTP = generateOTP(); 
-    await sendOTPByEmail(email, savedOTP);
+    // await sendOTPByEmail(email, savedOTP);
+    await sendOTPByBravo(email, savedOTP);
     res.status(200).json({ success: true, message: "OTP successfully resent to your email." });
   } catch (err) {
     console.log(err);
