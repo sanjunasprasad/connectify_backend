@@ -16,6 +16,7 @@ export const userRegister = async (req, res) => {
       // console.log('User dataoooo:', { firstName, lastName, phoneNo, email, password ,is_blocked});
        userMail=req.body.email
       savedOTP = generateOTP(); 
+      console.log("OTP GENREATEED:",savedOTP)
       await sendOTPByEmail(email, savedOTP);
       await registerUser(firstName, lastName, phoneNo, email, password,is_blocked);
       return res.status(200).end();
