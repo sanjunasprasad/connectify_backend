@@ -22,14 +22,34 @@ app.use('/public/image', express.static('public/image'));
 connectDB();
 
 
+   //CORS
+   app.use(
+     cors({
+      //  origin: 'http://localhost:3000',
+       origin: ['https://connectify-omega-mauve.vercel.app'] ,
+       methods: 'GET, PUT, POST, DELETE, PATCH',
+       preflightContinue: false,
+       optionsSuccessStatus: 204,
+       credentials: false
+     })
+   );
+
+
+//routes
+app.use('/', userRoute);
+app.use('/admin', adminRoute);
+app.use('/post', postRoute);
+app.use('/friend',friendRoute);
+app.use('/chat',chatRoute);
+app.use('/messages',messageRoute);
 
 
 //SOCKET
 const httpserver = http.createServer(app)
 const io = new Server( httpserver,{
     cors: {
-      origin: "http://localhost:3000",
-      // origin: "https://connectify-omega-mauve.vercel.app",
+      // origin: "http://localhost:3000",
+      origin: "https://connectify-omega-mauve.vercel.app",
       methods: ["GET" , "POST"],
       credentials : false,
     },
@@ -38,17 +58,7 @@ const io = new Server( httpserver,{
   });
 
 
-   //CORS
-   app.use(
-     cors({
-       origin: 'http://localhost:3000',
-      //  origin: ['https://connectify-omega-mauve.vercel.app'] ,
-       methods: 'GET, PUT, POST, DELETE, PATCH',
-       preflightContinue: false,
-       optionsSuccessStatus: 204,
-       credentials: false
-     })
-   );
+
 
 
 
@@ -91,13 +101,7 @@ io.on("connection", (socket) => {
 
 
 
-//routes
-app.use('/', userRoute);
-app.use('/admin', adminRoute);
-app.use('/post', postRoute);
-app.use('/friend',friendRoute);
-app.use('/chat',chatRoute);
-app.use('/messages',messageRoute);
+
 
 
 
