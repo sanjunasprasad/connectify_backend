@@ -56,7 +56,8 @@ apiInstance.setApiKey(
 export const sendOTPByBravo = async (email, otp) => {
  console.log("Generated OTP:", otp);
  console.log("Sending email to:", email);
-
+ console.log("BREVO_KEY exists:", !!process.env.BREVO_KEY); 
+  console.log("BREVO_KEY length:", process.env.BREVO_KEY?.length); 
 
  try {
    const sendSmtpEmail = new brevo.SendSmtpEmail();
