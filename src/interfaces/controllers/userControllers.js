@@ -50,9 +50,10 @@ export const userRegister = async (req, res) => {
   export const resendotp = async (req, res) => {
     try {
       console.log("resend otp calleddddddddddd");
+        console.log("Resending to email:", userMail);
        savedOTP = generateOTP(); 
       // await sendOTPByEmail(userMail, savedOTP);
-      await sendOTPByBravo(email, savedOTP);
+      await sendOTPByBravo(userMail, savedOTP);
       console.log("New OTP generated iam resend controller", savedOTP);
       res.status(200).json({ success: true, message: "OTP successfully resent to your email." });
     } catch (err) {
